@@ -1,0 +1,11 @@
+<a md-list-item routerLinkActive="active" [routerLink]="directory.href" class="flex-contaier" fxLayout="row">
+  <md-icon>{{directory.open?'keyboard_arrow_down':'keyboard_arrow_right'}}</md-icon>
+  <md-icon color="accent">{{directory.icon}}</md-icon>
+  <span>{{directory.title}}</span>
+</a>
+<div class=child-directories *ngIf="directory.open && directory.childDirectories">
+  <my-directory
+    *ngFor="let iDirectory of directory.childDirectories"
+    [directory]="iDirectory">
+  </my-directory>
+</div>

@@ -1,0 +1,4 @@
+<my-breadcrumbs [breadcrumbs]="breadcrumbs"></my-breadcrumbs>
+<md-grid-list  *ngIf="user" cols="3">
+  <md-grid-tile *ngFor="let interest of user.interests">{{interest.name}}</md-grid-tile>
+</md-grid-list>

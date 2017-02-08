@@ -1,0 +1,19 @@
+@import "../utills/variables";
+
+.child-directories {
+  padding-left: 15px;
+}
+
+my-directory {
+  a {
+    text-decoration: none;
+    &:hover {
+      background-color: md-color($accent, A200);
+      color: white;
+    }
+    //second icon indicating the type of a navigation anchor
+    md-icon:nth-child(2) {
+      margin: 0 5px 0 9px;
+    }
+  }
+}

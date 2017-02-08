@@ -1,0 +1,8 @@
+<div *ngIf="breadcrumbs">
+  <my-breadcrumbs [breadcrumbs]="breadcrumbs"></my-breadcrumbs>
+</div>
+<md-grid-list *ngIf="folder" cols="3" [gutterSize]="'5px'">
+  <md-grid-tile *ngFor="let card of folder.cards">
+    <myCard [card]="card"></myCard>
+  </md-grid-tile>
+</md-grid-list>

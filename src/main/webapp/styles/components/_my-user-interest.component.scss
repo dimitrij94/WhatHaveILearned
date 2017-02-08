@@ -1,0 +1,8 @@
+@import "../utills/variables";
+.user-interest-tr{
+  cursor: pointer;
+
+  &:hover{
+    background-color: $list-item-hover-color;
+  }
+}

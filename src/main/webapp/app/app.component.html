@@ -1,0 +1,7 @@
+<md-sidenav-container>
+  <md-sidenav  *ngIf="user" #sidenav mode="side" [opened]='true' align="start">
+    <my-navigation [active-user]="user"></my-navigation>
+  </md-sidenav>
+
+  <router-outlet></router-outlet>
+</md-sidenav-container>

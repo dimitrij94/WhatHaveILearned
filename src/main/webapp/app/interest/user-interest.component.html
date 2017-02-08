@@ -1,0 +1,23 @@
+<div *ngIf="breadcrumbs">
+  <my-breadcrumbs [breadcrumbs]="breadcrumbs"></my-breadcrumbs>
+</div>
+<table *ngIf="interest">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>(%) Mastered</th>
+    <th>Last studied</th>
+    <th>Next session</th>
+    <th>Priority</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr  *ngFor="let folder of interest.folders" (click)="router.navigate(getRouterLink(folder))" class="user-interest-tr">
+    <td>{{folder.title}}</td>
+    <td>{{folder.mastered}}</td>
+    <td>{{getLastLearningSession(folder)}}</td>
+    <td>{{getNextLearningSession(folder)}}</td>
+    <td>{{folder.priority}}</td>
+  </tr>
+  </tbody>
+</table>

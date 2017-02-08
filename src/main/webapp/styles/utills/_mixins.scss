@@ -1,0 +1,19 @@
+/**
+ * Created by Dmitrij on 16.01.2017.
+ */
+@import '../../node_modules/@angular/material/core/theming/all-theme';
+@import '../theming';
+
+@mixin opacity_on_hover($color, $amount) {
+  &:hover {
+    color: opacify($color, $amount);
+  }
+}
+
+@mixin background-color($color, $hue){
+  $themeColor: map_get($theme, $color);
+  &{
+    background-color: md-color($themeColor, $hue);
+  }
+}
+

@@ -1,0 +1,12 @@
+@import "../utills/variables";
+@import "../utills/mixins";
+
+md-toolbar {
+  a {
+    color: $primary-block-link-color;
+    text-decoration: none;
+    @include opacity_on_hover($primary-block-link-color, 0.2);
+    margin: 0 10px;
+  }
+}
+
