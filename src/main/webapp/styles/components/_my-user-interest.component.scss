@@ -1,8 +1,43 @@
 @import "../utills/variables";
-.user-interest-tr{
-  cursor: pointer;
 
-  &:hover{
-    background-color: $list-item-hover-color;
+md-list {
+  align-items: center;
+
+  .folder-item {
+    position: relative;
+    cursor: pointer;
+    z-index: 2;
+    width: 35em;
+    margin-left: -300px;
+    background-color: transparentize($list-item-hover-color, 0.6);
+
+    .folder-item-filler {
+      left: 0 !important;
+      position: absolute;
+      height: 100%;
+      z-index: 1;
+    }
+    .folder-item-filler-practiced{
+      @extend .folder-item-filler;
+      background-color: transparentize(md-color($primary, A200), 0.8);
+    }
+    .folder-item-filler-mastered{
+      @extend .folder-item-filler;
+      background-color: transparentize(md-color($primary, A200), 0.7);
+    }
+    .folder-icon {
+      line-height: 40px;
+      text-align: center;
+    }
+
+    &:hover {
+      background-color: $list-item-hover-color;
+    }
+  }
+}
+
+md-list-item {
+  .md-list-item {
+    width: 100%;
   }
 }

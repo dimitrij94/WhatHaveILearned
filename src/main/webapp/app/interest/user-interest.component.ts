@@ -2,17 +2,21 @@
  * Created by Dmitrij on 22.01.2017.
  */
 import {Component, OnInit} from "@angular/core";
-import {ActivatedRoute, Params, Router} from "@angular/router";
+import {ActivatedRoute, Params} from "@angular/router";
 import "rxjs/add/operator/switchMap";
-import {Folder} from "../folders/folder";
 import {UserInterest} from "./user-interest";
-import {Breadcrumb} from "../breadcrumb/breadcrumb";
 import {UserInterestService} from "./user-interest.service";
-import {LearningSession} from "../learning-session/learning-session";
-import {UserProgress} from "../user-progress/user-progress";
 import {User} from "../user/user";
 import {AuthenticationService} from "../authentication/authentication.service";
 import {Location} from "@angular/common";
+import {MyRoutingService} from "../my-routing.service";
+import {LearningSessionService} from "../learning-session/learning-session.service";
+import {LearningSession} from "../learning-session/learning-session";
+import {FolderService} from "../folders/folder.service";
+import {UserProgressService} from "../user-progress/user-progress-service";
+import {Folder} from "../folders/folder";
+
+
 @Component({
   selector: 'userInterest',
   moduleId: module.id,
@@ -20,61 +24,42 @@ import {Location} from "@angular/common";
 })
 export class UserInterestComponent implements OnInit {
   private interest:UserInterest;
-  private breadcrumbs:Array<Breadcrumb>;
+  //private breadcrumbs:Array<Breadcrumb>;
   private user:User;
 
   constructor(private interestService:UserInterestService,
+              private learningSessionService:LearningSessionService,
               private route:ActivatedRoute,
-              private router:Router,
+              private folderService:FolderService,
               private authService:AuthenticationService,
-              private location:Location) {
+              private location:Location,
+              private routingService:MyRoutingService,
+              private userProgressService:UserProgressService) {
   }
 
-  public getRouterLink(folder:Folder) {
-    return '/user/' + this.route.params['user_id'] + '/interest/' + this.route.params['interest_id'] + '/folder/' + folder.id
+  getFolderLastLearningSessionDate(sessions:Array<LearningSession>) {
+    if (sessions)
+      try {
+        return this.learningSessionService.getLearningSessionDate(this.learningSessionService.getLastLearningSession(sessions));
+      } catch (ex) {
+        console.log(ex);
+      }
+    else return "Not studied yet";
   }
-
 
   ngOnInit() {
+  let self = this;
+
     this.route.params
-      .switchMap((params:Params) => this.interestService.getUserInterest(+params['user_id'], +params['interest_id']))
-      .subscribe((userInterest:UserInterest)=> {
-        this.interest = userInterest;
-        this.breadcrumbs = this.getBreadcrumbs(userInterest);
+      .subscribe((params:Params) => {
+        this.authService.checkPermissions(+params['interest_id'], this.location);
+        this.interestService.getUserInterest(+params['user_id'], +params['interest_id'],
+          (userInterest:UserInterest) => {
+              userInterest.folders = userInterest.folders.map((folder:Folder) => this.userProgressService.getUserProgress(folder, this.user));
+              self.interest = userInterest;
+            //this.breadcrumbs = this.interestService.getBreadcrumbs(this.route, userInterest);
+          }
+        )
       });
-
-    if (this.authService.authenticated)
-      this.user = this.authService.getUser();
-    else this.location.go("/login")
-  }
-
-
-  getLastLearningSession(sessions:Array<LearningSession>) {
-    sessions
-      .sort(
-        (session1:LearningSession, session2:LearningSession) => session2.studied - session1.studied)
-      .shift();
-  }
-
-  getNextLearningSession(folder:Folder) {
-    let userProgress = new UserProgress(this.user, folder, folder.learningSessions);
-    let cardProgress:{} = userProgress.parseSessions();
-    let estimatedProgress = userProgress.estimateProgress(cardProgress);
-    if(estimatedProgress['mastered']===folder.cards.length)
-      return "Practice is not required";
-    
-  }
-
-  getBreadcrumbs(interest:UserInterest):Array<Breadcrumb> {
-    return [
-      {
-        name: 'HOME',
-        href: ['/user/home']
-      },
-      {
-        name: interest.name,
-        href: ['/user/', this.route.params['user_id'], '/interest/', interest.id]
-      },
-    ]
   }
 }

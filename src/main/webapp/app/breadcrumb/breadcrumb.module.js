@@ -13,6 +13,7 @@ var breadcrumb_component_1 = require("./breadcrumb.component");
 var material_1 = require("@angular/material");
 var common_1 = require("@angular/common");
 var router_1 = require("@angular/router");
+var breadcrumb_service_1 = require("./breadcrumb.service");
 /**
  * Created by Dmitrij on 02.02.2017.
  */
@@ -23,7 +24,8 @@ var BreadcrumbModule = (function () {
         core_1.NgModule({
             imports: [material_1.MaterialModule, common_1.CommonModule, router_1.RouterModule],
             exports: [breadcrumb_component_1.BreadcrumbComponent],
-            declarations: [breadcrumb_component_1.BreadcrumbComponent]
+            declarations: [breadcrumb_component_1.BreadcrumbComponent],
+            providers: [breadcrumb_service_1.BreadcrumbService]
         }), 
         __metadata('design:paramtypes', [])
     ], BreadcrumbModule);

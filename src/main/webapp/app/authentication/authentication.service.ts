@@ -2,6 +2,7 @@
  * Created by Dmitrij on 26.01.2017.
  */
 import {Injectable} from "@angular/core";
+import {Location} from "@angular/common";
 import {User} from "../user/user";
 import {USER} from "../user/mock-user";
 
@@ -10,7 +11,7 @@ export class AuthenticationService {
   public user:User;
   public authenticated:boolean = true;
 
-  public getUser():Promise<User>{
+  public getUser():Promise<User> {
     return Promise.resolve(USER);
   }
 
@@ -21,5 +22,10 @@ export class AuthenticationService {
         resolve(USER);
       }, 500)
     });
+  }
+
+  checkPermissions(interest_id:number, location:Location) {
+    if (!this.authenticated)
+      location.go('/login');
   }
 }

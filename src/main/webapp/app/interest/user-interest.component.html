@@ -1,23 +1,23 @@
+<!--
 <div *ngIf="breadcrumbs">
   <my-breadcrumbs [breadcrumbs]="breadcrumbs"></my-breadcrumbs>
 </div>
-<table *ngIf="interest">
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th>(%) Mastered</th>
-    <th>Last studied</th>
-    <th>Next session</th>
-    <th>Priority</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr  *ngFor="let folder of interest.folders" (click)="router.navigate(getRouterLink(folder))" class="user-interest-tr">
-    <td>{{folder.title}}</td>
-    <td>{{folder.mastered}}</td>
-    <td>{{getLastLearningSession(folder)}}</td>
-    <td>{{getNextLearningSession(folder)}}</td>
-    <td>{{folder.priority}}</td>
-  </tr>
-  </tbody>
-</table>
+-->
+<md-list *ngIf="interest" fxLayout="column" fxLayoutAlign="start center">
+
+  <md-list-item class="folder-item"
+                *ngFor="let folder of interest.folders"
+                (click)="router.navigate(routingService.getFolderRouterLink(route,folder))"
+                fxLayout="row"
+                fxLayoutAllign="start center">
+    <div class="folder-item-filler-mastered" [ngStyle]="{width: folder.userProgress.percentMastered+'%'}"></div>
+    <div class="folder-item-filler-practiced" [ngStyle]="{width: folder.userProgress.percentPracticed+'%'}"></div>
+    <md-icon class="folder-icon" md-list-avatar>folder</md-icon>
+    <h4 md-line>{{folder.title}}</h4>
+    <p md-line>{{getFolderLastLearningSessionDate(folder.learningSessions)}}</p>
+    <span fxFlex></span>
+    <div>
+      <p>{{folderService.getFolderNextLearningSessionDate(folder)}}</p>
+    </div>
+  </md-list-item>
+</md-list>

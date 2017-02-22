@@ -29,6 +29,10 @@ var AuthenticationService = (function () {
             }, 500);
         });
     };
+    AuthenticationService.prototype.checkPermissions = function (interest_id, location) {
+        if (!this.authenticated)
+            location.go('/login');
+    };
     AuthenticationService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [])

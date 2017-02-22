@@ -15,55 +15,46 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 require("rxjs/add/operator/switchMap");
 var user_interest_service_1 = require("./user-interest.service");
-var user_progress_1 = require("../user-progress/user-progress");
 var authentication_service_1 = require("../authentication/authentication.service");
 var common_1 = require("@angular/common");
+var my_routing_service_1 = require("../my-routing.service");
+var learning_session_service_1 = require("../learning-session/learning-session.service");
+var folder_service_1 = require("../folders/folder.service");
+var user_progress_service_1 = require("../user-progress/user-progress-service");
 var UserInterestComponent = (function () {
-    function UserInterestComponent(interestService, route, router, authService, location) {
+    function UserInterestComponent(interestService, learningSessionService, route, folderService, authService, location, routingService, userProgressService) {
         this.interestService = interestService;
+        this.learningSessionService = learningSessionService;
         this.route = route;
-        this.router = router;
+        this.folderService = folderService;
         this.authService = authService;
         this.location = location;
+        this.routingService = routingService;
+        this.userProgressService = userProgressService;
     }
-    UserInterestComponent.prototype.getRouterLink = function (folder) {
-        return '/user/' + this.route.params['user_id'] + '/interest/' + this.route.params['interest_id'] + '/folder/' + folder.id;
+    UserInterestComponent.prototype.getFolderLastLearningSessionDate = function (sessions) {
+        if (sessions)
+            try {
+                return this.learningSessionService.getLearningSessionDate(this.learningSessionService.getLastLearningSession(sessions));
+            }
+            catch (ex) {
+                console.log(ex);
+            }
+        else
+            return "Not studied yet";
     };
     UserInterestComponent.prototype.ngOnInit = function () {
         var _this = this;
+        var self = this;
         this.route.params
-            .switchMap(function (params) { return _this.interestService.getUserInterest(+params['user_id'], +params['interest_id']); })
-            .subscribe(function (userInterest) {
-            _this.interest = userInterest;
-            _this.breadcrumbs = _this.getBreadcrumbs(userInterest);
+            .subscribe(function (params) {
+            _this.authService.checkPermissions(+params['interest_id'], _this.location);
+            _this.interestService.getUserInterest(+params['user_id'], +params['interest_id'], function (userInterest) {
+                userInterest.folders = userInterest.folders.map(function (folder) { return _this.userProgressService.getUserProgress(folder, _this.user); });
+                self.interest = userInterest;
+                //this.breadcrumbs = this.interestService.getBreadcrumbs(this.route, userInterest);
+            });
         });
-        if (this.authService.authenticated)
-            this.user = this.authService.getUser();
-        else
-            this.location.go("/login");
-    };
-    UserInterestComponent.prototype.getLastLearningSession = function (sessions) {
-        sessions
-            .sort(function (session1, session2) { return session2.studied - session1.studied; })
-            .shift();
-    };
-    UserInterestComponent.prototype.getNextLearningSession = function (folder) {
-        var _this = this;
-        sessions.map(function (session) {
-            new user_progress_1.UserProgress(_this.r, session.cardsStatuses);
-        });
-    };
-    UserInterestComponent.prototype.getBreadcrumbs = function (interest) {
-        return [
-            {
-                name: 'HOME',
-                href: ['/user/home']
-            },
-            {
-                name: interest.name,
-                href: ['/user/', this.route.params['user_id'], '/interest/', interest.id]
-            },
-        ];
     };
     UserInterestComponent = __decorate([
         core_1.Component({
@@ -71,7 +62,7 @@ var UserInterestComponent = (function () {
             moduleId: module.id,
             templateUrl: 'user-interest.component.html'
         }), 
-        __metadata('design:paramtypes', [user_interest_service_1.UserInterestService, router_1.ActivatedRoute, router_1.Router, authentication_service_1.AuthenticationService, common_1.Location])
+        __metadata('design:paramtypes', [user_interest_service_1.UserInterestService, learning_session_service_1.LearningSessionService, router_1.ActivatedRoute, folder_service_1.FolderService, authentication_service_1.AuthenticationService, common_1.Location, my_routing_service_1.MyRoutingService, user_progress_service_1.UserProgressService])
     ], UserInterestComponent);
     return UserInterestComponent;
 }());

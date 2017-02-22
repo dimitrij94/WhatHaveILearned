@@ -21,6 +21,9 @@ var my_navigation_module_1 = require("./navigation/my-navigation.module");
 var user_interest_module_1 = require("./interest/user-interest.module");
 var authentication_module_1 = require("./authentication/authentication.module");
 var user_module_1 = require("./user/user.module");
+var user_progress_service_1 = require("./user-progress/user-progress-service");
+var my_routing_service_1 = require("./my-routing.service");
+var learing_session_module_1 = require("./learning-session/learing-session.module");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -35,10 +38,11 @@ var AppModule = (function () {
                 my_navigation_module_1.MyNavigationModule,
                 user_interest_module_1.UserInterestModule,
                 authentication_module_1.AuthenticationModule,
+                learing_session_module_1.LearningSessionModule,
                 user_module_1.UserModule
             ],
             exports: [],
-            providers: [],
+            providers: [{ provide: core_1.LOCALE_ID, useValue: 'uk_UA' }, user_progress_service_1.UserProgressService, my_routing_service_1.MyRoutingService],
             declarations: [app_component_1.AppComponent, my_page_not_found_component_1.MyPageNotFoundComponent],
             bootstrap: [app_component_1.AppComponent]
         }), 

@@ -1,1 +1,1 @@
-{"version":3,"file":"mock-user-interest.js","sourceRoot":"","sources":["mock-user-interest.ts"],"names":[],"mappings":";AACA,4BAAqB,wBAAwB,CAAC,CAAA;AAC9C;;GAEG;AACU,0BAAkB,GAAG;IAChC,EAAE,EAAE,CAAC;IACL,OAAO,EAAE,CAAC,oBAAM,CAAC;IACjB,IAAI,EAAE,kBAAkB;CACzB,CAAC"}
+{"version":3,"file":"mock-user-interest.js","sourceRoot":"","sources":["mock-user-interest.ts"],"names":[],"mappings":";AAAA,4BAAqB,wBAAwB,CAAC,CAAA;AAC9C,8BAA2B,iBAAiB,CAAC,CAAA;AAC7C;;GAEG;AACU,0BAAkB,GAAG,IAAI,4BAAY,CAAC,CAAC,EAAE,CAAC,oBAAM,CAAC,EAAE,kBAAkB,CAAC,CAAC"}

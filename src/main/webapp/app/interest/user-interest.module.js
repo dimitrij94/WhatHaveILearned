@@ -18,12 +18,13 @@ var user_interest_service_1 = require("./user-interest.service");
 var breadcrumb_module_1 = require("../breadcrumb/breadcrumb.module");
 var material_1 = require("@angular/material");
 var router_1 = require("@angular/router");
+var flex_layout_1 = require("@angular/flex-layout");
 var UserInterestModule = (function () {
     function UserInterestModule() {
     }
     UserInterestModule = __decorate([
         core_1.NgModule({
-            imports: [common_1.CommonModule, breadcrumb_module_1.BreadcrumbModule, router_1.RouterModule, material_1.MaterialModule],
+            imports: [common_1.CommonModule, flex_layout_1.FlexLayoutModule.forRoot(), breadcrumb_module_1.BreadcrumbModule, router_1.RouterModule, material_1.MaterialModule],
             exports: [user_interest_component_1.UserInterestComponent],
             declarations: [user_interest_component_1.UserInterestComponent],
             providers: [user_interest_service_1.UserInterestService]

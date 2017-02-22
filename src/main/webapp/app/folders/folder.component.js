@@ -11,8 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var folder_service_1 = require("./folder.service");
 var router_1 = require("@angular/router");
-require("rxjs/add/operator/switchMap");
 var FolderComponent = (function () {
+    //private interest:UserInterest;
+    //private breadcrumbs:Array<Breadcrumb>;
     function FolderComponent(route, folderService) {
         this.route = route;
         this.folderService = folderService;
@@ -20,25 +21,13 @@ var FolderComponent = (function () {
     FolderComponent.prototype.ngOnInit = function () {
         this.getFolder();
     };
-    FolderComponent.prototype.getBreadcrumbs = function (folder) {
-        return [
-            {
-                name: folder.interest.name.toUpperCase(),
-                href: ['/user/', this.route.params['user_id'], '/interest/', this.route.params['interest_id']]
-            },
-            {
-                name: folder.title.toUpperCase(),
-                href: ['/user/', this.route.params['user_id'], '/interest/', this.route.params['interest_id'], '/folder/', folder.id]
-            }
-        ];
-    };
     FolderComponent.prototype.getFolder = function () {
         var _this = this;
-        this.route.params
-            .switchMap(function (params) { return _this.folderService.getFolder(+params['folder_id']); })
-            .subscribe(function (folder) {
-            _this.folder = folder;
-            _this.breadcrumbs = _this.getBreadcrumbs(folder);
+        var self = this;
+        this.route.params.subscribe(function (params) {
+            _this.folderService.get(+params['folder_id'], function (folder) {
+                self.folder = folder;
+            });
         });
     };
     FolderComponent = __decorate([
