@@ -1,13 +1,17 @@
-@import "theming";
+@import 'theming';
 @import "components/my-toolbar";
 @import "components/my-folder.component";
 @import "components/my-card.component";
 @import "components/my-navigation-directory.component";
 @import "components/my-user-interest.component";
 @import "components/my-sidenav.component";
+@import "components/my-app.component";
+@import 'https://fonts.googleapis.com/icon?family=Roboto';
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
 
 html, body, my-app, md-sidenav-container, .md-sidenav-content {
-  margin: 0;
-  width: 100%;
   height: 100%;
+  margin: 0;
 }
+
+

@@ -7,17 +7,18 @@
 
   <md-list-item class="folder-item"
                 *ngFor="let folder of interest.folders"
-                (click)="router.navigate(routingService.getFolderRouterLink(route,folder))"
+                (click)="navigate(folder)"
                 fxLayout="row"
                 fxLayoutAllign="start center">
-    <div class="folder-item-filler-mastered" [ngStyle]="{width: folder.userProgress.percentMastered+'%'}"></div>
-    <div class="folder-item-filler-practiced" [ngStyle]="{width: folder.userProgress.percentPracticed+'%'}"></div>
+
     <md-icon class="folder-icon" md-list-avatar>folder</md-icon>
-    <h4 md-line>{{folder.title}}</h4>
-    <p md-line>{{getFolderLastLearningSessionDate(folder.learningSessions)}}</p>
+    <h4 md-line>{{folder.title}} </h4>
+    <p md-line>{{folder.lastLearningSessionDate}}</p>
     <span fxFlex></span>
     <div>
       <p>{{folderService.getFolderNextLearningSessionDate(folder)}}</p>
     </div>
+    <div class="folder-item-filler-practiced" [ngStyle]="{width:folder.userProgress.percentPracticed + '%'}"></div>
+    <div class="folder-item-filler-mastered" [ngStyle]="{width:40 + '%'}"></div>
   </md-list-item>
 </md-list>

@@ -1,11 +1,11 @@
 import {LearningSession, LearningSessionStatus} from "./learning-session";
 import {USER} from "../user/mock-user";
 import {FOLDER} from "../folders/mock-folder";
-import {MOCK_CARDS} from "../card/mock-cards";
 import {Card} from "../card/card";
 /**
  * Created by Dmitrij on 24.01.2017.
  */
+const session_date = 1488904124066;
 
 class ParseService {
   public static parseFolderCards(cards:Card[]):any {
@@ -29,29 +29,29 @@ class ParseService {
 }
 
 let session1:LearningSession = {
-  sessionDate: new Date(Date.now() - 24 * 3600 * 1000),
+  sessionDate: new Date(session_date - 24 * 3600 * 1000),
   status: LearningSessionStatus.TAKEN,
   user: USER,
   folder: FOLDER,
-  cardsStatuses: ParseService.parseFolderCards(MOCK_CARDS),
+  cardsStatuses: {1:1,2:1,3:0},
   remembered: ParseService.parse(this.cardStatuses),
 };
 let session2:LearningSession = {
-  sessionDate: new Date(Date.now() - 2*24 * 3600 * 1000),
-  status: LearningSessionStatus.TAKEN,
-  cardsStatuses: ParseService.parseFolderCards(MOCK_CARDS),
-  user: USER,
-  folder: FOLDER,
-  remembered: ParseService.parse(this.cardStatuses)
-};
-let session3:LearningSession = {
-  sessionDate: new Date(Date.now() - 4*24 * 3600 * 1000),
+  sessionDate: new Date(session_date - 2*24 * 3600 * 1000),
   status: LearningSessionStatus.TAKEN,
   cardsStatuses: {1:1,2:1,3:0},
   user: USER,
   folder: FOLDER,
   remembered: ParseService.parse(this.cardStatuses)
 };
-export const MOCK_LEARNING_SESSION:LearningSession[] = [session1, session2];
+let session3:LearningSession = {
+  sessionDate: new Date(session_date - 4*24 * 3600 * 1000),
+  status: LearningSessionStatus.TAKEN,
+  cardsStatuses: {1:1,2:1,3:0},
+  user: USER,
+  folder: FOLDER,
+  remembered: ParseService.parse(this.cardStatuses)
+};
+export const MOCK_LEARNING_SESSION:LearningSession[] = [session1, session2, session3];
 
 

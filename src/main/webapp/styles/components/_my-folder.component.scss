@@ -1,3 +1,35 @@
-md-grid-list{
-  margin:8px;
+md-grid-list {
+  margin: 8px;
+}
+
+#folder-component-wrapper {
+  height: 100%;
+
+  .folder-menu {
+    width: 4em;
+    height: 100%;
+    position: fixed;
+    padding-top: 3em;
+    box-shadow: 0 8px 10px -5px rgba(0, 0, 0, .2), 0 16px 24px 2px rgba(0, 0, 0, .14), 0 6px 30px 5px rgba(0, 0, 0, .12);
+
+    .folder-menu-item {
+      text-decoration:none;
+      cursor: pointer;
+      color:black;
+      text-align: center;
+      margin:6px 0;
+      md-icon {
+        width: 100%;
+        text-align: center;
+      }
+      small{
+        font-size:0.67em;
+      }
+    }
+  }
+  .folder-content {
+    overflow: auto;
+    width: 100%;
+    margin-left: 3.5em;
+  }
 }

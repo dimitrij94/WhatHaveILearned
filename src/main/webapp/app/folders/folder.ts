@@ -8,6 +8,7 @@ import {CacheableEntity} from "../generic/cacheable-entity";
  */
 export class Folder extends CacheableEntity{
   public userProgress:UserProgress;
+  public lastLearningSessionDate?:string;
   constructor(public id:number,
               public title:string,
               public cards?:Card[],

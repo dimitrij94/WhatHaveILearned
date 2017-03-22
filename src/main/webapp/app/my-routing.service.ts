@@ -1,7 +1,4 @@
 import {Injectable} from "@angular/core";
-import {Folder} from "./folders/folder";
-import {ActivatedRoute} from "@angular/router";
-import {UserInterest} from "./interest/user-interest";
 /**
  * Created by Dmitrij on 15.02.2017.
  */
@@ -13,15 +10,23 @@ export class MyRoutingService {
 
   }
 
-  public getFolderRouterLink(route:ActivatedRoute, folder:Folder) {
-    return ['/user/', route.params['user_id'], '/interest/', route.params['interest_id'], '/folder/', folder.id];
+  public getFolderRouterLink(user_id:number, interest_id:number, folder_id:number) {
+    return ['/user', user_id, 'interest', interest_id, 'folder', folder_id];
   }
 
-  public getInterestRoutingLink(route:ActivatedRoute, interest:UserInterest) {
-    return ['/user/', route.params['user_id'], '/interest/', interest.id];
+  public getInterestRoutingLink(interest_id:number, user_id:number) {
+    return ['/user', user_id, 'interest', interest_id];
   }
 
   public getUserHomeRoutingLink() {
-    return ['/user/home'];
+    return ['/user','home'];
+  }
+
+  public getFolderEditRouterLink(user_id:number, interest_id:number, folder_id:number) {
+    return this.getFolderRouterLink(user_id, interest_id, folder_id).concat('edit');
+  }
+
+  public getFolderShuffleRouterLink(user_id:number, interest_id:number, folder_id:number) {
+    return this.getFolderRouterLink(user_id, interest_id, folder_id).concat('shuffle');
   }
 }

@@ -1,19 +1,35 @@
 @import "../utills/variables";
 
-.child-directories {
-  padding-left: 15px;
-}
+my-navigation {
+  md-toolbar {
+    z-index: 5;
+    position: relative;
+  }
+  md-list {
+    padding-top: 0 !important;
 
-my-directory {
-  a {
-    text-decoration: none;
-    &:hover {
-      background-color: md-color($accent, A200);
-      color: white;
-    }
-    //second icon indicating the type of a navigation anchor
-    md-icon:nth-child(2) {
-      margin: 0 5px 0 9px;
+    my-directory > a {
+      z-index: 2;
+      position: relative;
+      background-color: white;
+      &:hover {
+        background-color: md-color($accent, A200);
+      }
+      //directory open / closed state indicator
+      div {
+        md-icon:nth-child(2){
+          cursor: pointer;
+        }
+        //second icon indicating the type of a navigation anchor
+        md-icon:nth-child(3) {
+          margin: 0 5px 0 9px;
+        }
+      }
+      a {
+        text-decoration: none;
+        color: black;
+      }
     }
   }
 }
+

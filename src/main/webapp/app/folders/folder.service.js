@@ -18,13 +18,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  */
 var core_1 = require("@angular/core");
 var mock_folder_1 = require("./mock-folder");
-var user_interest_service_1 = require("../interest/user-interest.service");
-var cachable_generic_service_1 = require("../cachable-generic.service");
+var cachable_generic_service_1 = require("../generic/cachable-generic.service");
 var FolderService = (function (_super) {
     __extends(FolderService, _super);
-    function FolderService(interestService) {
+    function FolderService() {
         _super.call(this);
-        this.interestService = interestService;
         this.cache = {};
     }
     FolderService.prototype.getFolderNextLearningSessionDate = function (folder) {
@@ -42,42 +40,29 @@ var FolderService = (function (_super) {
             setTimeout(function () { return resolve(mock_folder_1.FOLDER); }, 1000);
         });
     };
+    FolderService.prototype.cacheValue = function (value) {
+        //cache folder cards
+        _super.prototype.cacheValue.call(this, value);
+    };
     FolderService.prototype.getCache = function () {
         return this.cache;
     };
-    FolderService.prototype.get = function (id, callback, force_reset) {
-        if (force_reset === void 0) { force_reset = false; }
-        _super.prototype.get.call(this, id, callback, force_reset);
-    };
-    FolderService.prototype.getAll = function (ids, callback, force_reset, include_cards) {
-        var _this = this;
+    FolderService.prototype.getAll = function (ids, force_reset, include_cards) {
         if (force_reset === void 0) { force_reset = false; }
         if (include_cards === void 0) { include_cards = false; }
-        if (force_reset) {
-            this.getAllById(ids, include_cards).then(function (value) {
-                value.forEach(function (f) { return _super.prototype.cacheValue.call(_this, f); });
-                callback(value);
-            });
-        }
+        if (force_reset)
+            return { found_in_cache: [], fetched: this.getAllById(ids, include_cards) };
         else {
-            var ids_left_1 = [];
-            var folders_cached_1 = [];
-            ids.forEach(function (id) {
-                var v = _super.prototype.getFromCache.call(_this, id);
-                if (v)
-                    folders_cached_1.push(v);
-                else
-                    ids_left_1.push(id);
-            });
-            this.getAllById(ids_left_1, include_cards).then(function (retrieved_folders) {
-                retrieved_folders.forEach(function (retrieved_folder) { return _super.prototype.cacheValue.call(_this, retrieved_folder); });
-                callback(retrieved_folders.concat(folders_cached_1));
-            });
+            var cache_results = _super.prototype.getAllFromCache.call(this, ids);
+            return {
+                found_in_cache: cache_results.values_found,
+                fetched: this.getAllById(cache_results.ids_left, include_cards)
+            };
         }
     };
     FolderService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [user_interest_service_1.UserInterestService])
+        __metadata('design:paramtypes', [])
     ], FolderService);
     return FolderService;
 }(cachable_generic_service_1.CachableGenericService));

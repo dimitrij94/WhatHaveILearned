@@ -2,10 +2,10 @@
 var learning_session_1 = require("./learning-session");
 var mock_user_1 = require("../user/mock-user");
 var mock_folder_1 = require("../folders/mock-folder");
-var mock_cards_1 = require("../card/mock-cards");
 /**
  * Created by Dmitrij on 24.01.2017.
  */
+var session_date = 1488904124066;
 var ParseService = (function () {
     function ParseService() {
     }
@@ -29,28 +29,28 @@ var ParseService = (function () {
     return ParseService;
 }());
 var session1 = {
-    sessionDate: new Date(Date.now() - 24 * 3600 * 1000),
+    sessionDate: new Date(session_date - 24 * 3600 * 1000),
     status: learning_session_1.LearningSessionStatus.TAKEN,
     user: mock_user_1.USER,
     folder: mock_folder_1.FOLDER,
-    cardsStatuses: ParseService.parseFolderCards(mock_cards_1.MOCK_CARDS),
+    cardsStatuses: { 1: 1, 2: 1, 3: 0 },
     remembered: ParseService.parse(this.cardStatuses),
 };
 var session2 = {
-    sessionDate: new Date(Date.now() - 2 * 24 * 3600 * 1000),
-    status: learning_session_1.LearningSessionStatus.TAKEN,
-    cardsStatuses: ParseService.parseFolderCards(mock_cards_1.MOCK_CARDS),
-    user: mock_user_1.USER,
-    folder: mock_folder_1.FOLDER,
-    remembered: ParseService.parse(this.cardStatuses)
-};
-var session3 = {
-    sessionDate: new Date(Date.now() - 4 * 24 * 3600 * 1000),
+    sessionDate: new Date(session_date - 2 * 24 * 3600 * 1000),
     status: learning_session_1.LearningSessionStatus.TAKEN,
     cardsStatuses: { 1: 1, 2: 1, 3: 0 },
     user: mock_user_1.USER,
     folder: mock_folder_1.FOLDER,
     remembered: ParseService.parse(this.cardStatuses)
 };
-exports.MOCK_LEARNING_SESSION = [session1, session2];
+var session3 = {
+    sessionDate: new Date(session_date - 4 * 24 * 3600 * 1000),
+    status: learning_session_1.LearningSessionStatus.TAKEN,
+    cardsStatuses: { 1: 1, 2: 1, 3: 0 },
+    user: mock_user_1.USER,
+    folder: mock_folder_1.FOLDER,
+    remembered: ParseService.parse(this.cardStatuses)
+};
+exports.MOCK_LEARNING_SESSION = [session1, session2, session3];
 //# sourceMappingURL=mock-learning-session.js.map

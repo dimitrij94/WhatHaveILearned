@@ -8,7 +8,7 @@ import {MaterialModule} from "@angular/material";
 import {NavigationComponent} from "./navigation.component";
 import {RouterModule} from "@angular/router";
 @NgModule({
-  imports: [CommonModule, MaterialModule, RouterModule],
+  imports: [CommonModule, MaterialModule.forRoot(), RouterModule],
   exports: [DirectoryComponent, NavigationComponent],
   declarations: [DirectoryComponent, NavigationComponent],
   providers: []

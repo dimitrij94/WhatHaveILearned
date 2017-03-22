@@ -33,7 +33,37 @@ var DirectoryComponent = (function () {
         core_1.Component({
             selector: 'my-directory',
             moduleId: module.id,
-            templateUrl: './directory.component.html'
+            templateUrl: './directory.component.html',
+            animations: [
+                core_1.trigger('pointerState', [
+                    core_1.state('opened', core_1.style({ transform: 'rotateZ(90deg)' })),
+                    core_1.state('closed', core_1.style({ transform: 'rotateZ(0deg)' })),
+                    core_1.transition('opened <=> closed', core_1.animate(250))
+                ]),
+                core_1.trigger('directoryState', [
+                    core_1.state('opened', core_1.style({
+                        transform: "translateY(0)",
+                        zIndex: 2,
+                        opacity: 1
+                    })),
+                    core_1.transition('* => void', [
+                        core_1.style({
+                            zIndex: 1
+                        }),
+                        core_1.animate(250, core_1.style({
+                            transform: 'translateY(-100%)',
+                            opacity: 0
+                        }))
+                    ]),
+                    core_1.transition('void => *', [
+                        core_1.style({
+                            zIndex: 1,
+                            transform: 'translateY(-100%)'
+                        }),
+                        core_1.animate(250)
+                    ])
+                ])
+            ]
         }), 
         __metadata('design:paramtypes', [])
     ], DirectoryComponent);

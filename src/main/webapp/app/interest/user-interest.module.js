@@ -24,7 +24,7 @@ var UserInterestModule = (function () {
     }
     UserInterestModule = __decorate([
         core_1.NgModule({
-            imports: [common_1.CommonModule, flex_layout_1.FlexLayoutModule.forRoot(), breadcrumb_module_1.BreadcrumbModule, router_1.RouterModule, material_1.MaterialModule],
+            imports: [common_1.CommonModule, flex_layout_1.FlexLayoutModule, breadcrumb_module_1.BreadcrumbModule, router_1.RouterModule, material_1.MaterialModule.forRoot()],
             exports: [user_interest_component_1.UserInterestComponent],
             declarations: [user_interest_component_1.UserInterestComponent],
             providers: [user_interest_service_1.UserInterestService]

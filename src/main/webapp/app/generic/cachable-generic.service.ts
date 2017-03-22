@@ -4,7 +4,6 @@ import {CacheableEntity} from "./cacheable-entity";
  */
 const cacheUpdateTime:number = 60 * 60 * 1000;
 export abstract class CachableGenericService<T extends CacheableEntity> {
-  private cache:{} = {};
 
   protected abstract getAllById(ids:number[]):Promise<T[]>;
 
@@ -19,8 +18,8 @@ export abstract class CachableGenericService<T extends CacheableEntity> {
   }
 
   private cleanCache() {
-    for (let id in this.cache) {
-      this.cache[id].deprecated() && delete this.cache[id];
+    for (let id in this.getCache()) {
+      this.getCache()[id].deprecated() && delete this.getCache()[id];
     }
   }
 
@@ -29,50 +28,54 @@ export abstract class CachableGenericService<T extends CacheableEntity> {
     this.getCache()[value.id] = value;
   }
 
-  protected getFromCache(id:number):T {
+  public getFromCache(id:number):T {
     let cachedValue = this.getCache()[id];
     if (cachedValue)
       cachedValue.date_added = Date.now();
     return cachedValue;
   }
 
-  private getAndCache(id:number, callback:(result:T)=>any) {
-    this.getById(id).then((result:T)=> {
-      this.cacheValue(result);
-      callback(result);
-    });
+  public cacheAll(values:T[]) {
+    values.forEach((v:T)=> {
+      this.cacheValue(v);
+    })
   }
 
+  public getAllFromCache(ids:number[]):{ids_left:number[], values_found:T[]} {
+    let ids_left:number[] = [];
+    let values_found:T[] = [];
+    ids.forEach((id:number)=> {
+      let value = this.getFromCache(id);
+      if (value) values_found.push(value);
+      else ids_left.push(id);
+    });
+    return {ids_left: ids_left, values_found: values_found};
+  }
 
-  protected getAll(ids:number[], callback:(result:T[])=>any, force_reset:boolean = false):void {
+  public getAll(ids:number[], force_reset:boolean = false):{found_in_cache:T[], fetched:Promise<T[]>} {
+    let found_in_cache:T[] = [];
     if (force_reset)
-      this.getAllById(ids).then((value:T[])=> {
-        value.forEach((v:T)=>this.cacheValue(v));
-        callback(value);
-      });
+      return {fetched: this.getAllById(ids), found_in_cache: found_in_cache};
     else {
-      let ids_left:number[] = [];
-      let values_cached:T[] = [];
-      ids.forEach((id:number)=> {
-        let v:T = this.getFromCache(id);
-        if (v)values_cached.push(v);
-        else ids_left.push(id);
-      });
-      this.getAllById(ids_left).then((result:T[])=>callback(result.concat(values_cached)));
+      let cached_search_result = this.getAllFromCache(ids);
+      return {
+        found_in_cache: cached_search_result.values_found,
+        fetched: this.getAllById(cached_search_result.ids_left)
+      };
     }
   }
 
-  protected get(id:number, callback:(result:T)=>any, force_reset:boolean = false):void {
+  public get(id:number, force_reset:boolean = false):Promise<T> {
     if (force_reset) {
-      this.getAndCache(id, callback);
+      return this.getById(id);
     }
     else {
       let cached_value = this.getFromCache(id);
       if (cached_value) {
-        callback(cached_value);
+        return Promise.resolve(cached_value);
       }
       else {
-        this.getAndCache(id, callback);
+        return this.getById(id);
       }
     }
   }

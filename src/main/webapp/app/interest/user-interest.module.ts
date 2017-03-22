@@ -11,7 +11,7 @@ import {MaterialModule} from "@angular/material";
 import {RouterModule} from "@angular/router";
 import {FlexLayoutModule} from "@angular/flex-layout";
 @NgModule({
-  imports: [CommonModule, FlexLayoutModule.forRoot(), BreadcrumbModule, RouterModule, MaterialModule],
+  imports: [CommonModule, FlexLayoutModule, BreadcrumbModule, RouterModule, MaterialModule.forRoot()],
   exports: [UserInterestComponent],
   declarations: [UserInterestComponent],
   providers: [UserInterestService]

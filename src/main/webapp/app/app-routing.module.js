@@ -9,11 +9,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var folder_component_1 = require("./folders/folder.component");
+var folder_component_1 = require("./folders/folder-overview/folder.component");
 var router_1 = require("@angular/router");
 var my_page_not_found_component_1 = require("./my-page-not-found.component");
 var user_interest_component_1 = require("./interest/user-interest.component");
 var user_home_component_1 = require("./user/user-home.component");
+var folder_edit_component_1 = require("./folders/folder-edit-page/folder-edit.component");
 var appRoutes = [
     {
         path: '',
@@ -23,6 +24,10 @@ var appRoutes = [
     {
         path: 'user/:user_id/interest/:interest_id/folder/:folder_id',
         component: folder_component_1.FolderComponent
+    },
+    {
+        path: 'user/:user_id/interest/:interest_id/folder/:folder_id/edit',
+        component: folder_edit_component_1.FolderEditComponent
     },
     {
         path: 'user/:user_id/interest/:interest_id',

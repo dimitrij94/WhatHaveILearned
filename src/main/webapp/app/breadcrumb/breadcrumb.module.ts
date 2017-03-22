@@ -9,7 +9,7 @@ import {BreadcrumbService} from "./breadcrumb.service";
  * Created by Dmitrij on 02.02.2017.
  */
 @NgModule({
-  imports:[MaterialModule, CommonModule, RouterModule],
+  imports:[MaterialModule.forRoot(), CommonModule, RouterModule],
   exports:[BreadcrumbComponent],
   declarations:[BreadcrumbComponent],
   providers:[BreadcrumbService]

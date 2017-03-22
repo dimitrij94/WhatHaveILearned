@@ -13,7 +13,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  */
 var core_1 = require("@angular/core");
 var common_1 = require("@angular/common");
-var folder_component_1 = require("./folder.component");
+var folder_component_1 = require("./folder-overview/folder.component");
 var material_1 = require("@angular/material");
 var folder_service_1 = require("./folder.service");
 var card_module_1 = require("../card/card-module");
@@ -21,6 +21,7 @@ var flex_layout_1 = require("@angular/flex-layout");
 var user_module_1 = require("../user/user.module");
 var router_1 = require("@angular/router");
 var breadcrumb_module_1 = require("../breadcrumb/breadcrumb.module");
+var folder_edit_component_1 = require("./folder-edit-page/folder-edit.component");
 var FolderModule = (function () {
     function FolderModule() {
     }
@@ -28,7 +29,7 @@ var FolderModule = (function () {
         core_1.NgModule({
             imports: [
                 breadcrumb_module_1.BreadcrumbModule,
-                flex_layout_1.FlexLayoutModule.forRoot(),
+                flex_layout_1.FlexLayoutModule,
                 router_1.RouterModule,
                 common_1.CommonModule,
                 material_1.MaterialModule.forRoot(),
@@ -36,7 +37,7 @@ var FolderModule = (function () {
                 user_module_1.UserModule
             ],
             exports: [folder_component_1.FolderComponent],
-            declarations: [folder_component_1.FolderComponent],
+            declarations: [folder_component_1.FolderComponent, folder_edit_component_1.FolderEditComponent],
             providers: [folder_service_1.FolderService]
         }), 
         __metadata('design:paramtypes', [])

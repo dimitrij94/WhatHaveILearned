@@ -6,14 +6,13 @@ var cacheUpdateTime = 60 * 60 * 1000;
 var CachableGenericService = (function () {
     function CachableGenericService() {
         var _this = this;
-        this.cache = {};
         setTimeout(function () {
             _this.cleanCache();
         }, cacheUpdateTime);
     }
     CachableGenericService.prototype.cleanCache = function () {
-        for (var id in this.cache) {
-            this.cache[id].deprecated() && delete this.cache[id];
+        for (var id in this.getCache()) {
+            this.getCache()[id].deprecated() && delete this.getCache()[id];
         }
     };
     CachableGenericService.prototype.cacheValue = function (value) {
@@ -26,46 +25,50 @@ var CachableGenericService = (function () {
             cachedValue.date_added = Date.now();
         return cachedValue;
     };
-    CachableGenericService.prototype.getAndCache = function (id, callback) {
+    CachableGenericService.prototype.cacheAll = function (values) {
         var _this = this;
-        this.getById(id).then(function (result) {
-            _this.cacheValue(result);
-            callback(result);
+        values.forEach(function (v) {
+            _this.cacheValue(v);
         });
     };
-    CachableGenericService.prototype.getAll = function (ids, callback, force_reset) {
+    CachableGenericService.prototype.getAllFromCache = function (ids) {
         var _this = this;
+        var ids_left = [];
+        var values_found = [];
+        ids.forEach(function (id) {
+            var value = _this.getFromCache(id);
+            if (value)
+                values_found.push(value);
+            else
+                ids_left.push(id);
+        });
+        return { ids_left: ids_left, values_found: values_found };
+    };
+    CachableGenericService.prototype.getAll = function (ids, force_reset) {
         if (force_reset === void 0) { force_reset = false; }
+        var found_in_cache = [];
         if (force_reset)
-            this.getAllById(ids).then(function (value) {
-                value.forEach(function (v) { return _this.cacheValue(v); });
-                callback(value);
-            });
+            return { fetched: this.getAllById(ids), found_in_cache: found_in_cache };
         else {
-            var ids_left_1 = [];
-            var values_cached_1 = [];
-            ids.forEach(function (id) {
-                var v = _this.getFromCache(id);
-                if (v)
-                    values_cached_1.push(v);
-                else
-                    ids_left_1.push(id);
-            });
-            this.getAllById(ids_left_1).then(function (result) { return callback(result.concat(values_cached_1)); });
+            var cached_search_result = this.getAllFromCache(ids);
+            return {
+                found_in_cache: cached_search_result.values_found,
+                fetched: this.getAllById(cached_search_result.ids_left)
+            };
         }
     };
-    CachableGenericService.prototype.get = function (id, callback, force_reset) {
+    CachableGenericService.prototype.get = function (id, force_reset) {
         if (force_reset === void 0) { force_reset = false; }
         if (force_reset) {
-            this.getAndCache(id, callback);
+            return this.getById(id);
         }
         else {
             var cached_value = this.getFromCache(id);
             if (cached_value) {
-                callback(cached_value);
+                return Promise.resolve(cached_value);
             }
             else {
-                this.getAndCache(id, callback);
+                return this.getById(id);
             }
         }
     };

@@ -22,20 +22,17 @@ export class UserProgressService {
           if (learningSessions[i - 1].cardsStatuses[cardId] == CardLearningStatus.REMEMBERED) {
             cardsProgress[cardId]++;
           }
-          else cardsProgress[cardId]=0;
+          else cardsProgress[cardId] = 0;
 
       }
     }
     return cardsProgress;
   }
 
-  public getUserProgress(folder:Folder, user:User):Folder {
-    folder.userProgress = new UserProgress(user, folder, this.parseSessions(folder));
-    folder.userProgress = this.estimateProgress(folder.userProgress);
-    return folder;
-  }
 
-  public estimateProgress(userProgress:UserProgress) {
+  public estimateProgress(folder:Folder, user:User) {
+    let userProgress = new UserProgress(user, folder, this.parseSessions(folder));
+    userProgress.cardProgress = this.parseSessions(folder);
     let num_cards = userProgress.folder.cards.length;
     let num_mastered = 0;
     let num_practiced = 0;
@@ -44,16 +41,16 @@ export class UserProgressService {
       if (userProgress.cardProgress[cardId] >= 3) {
         num_mastered++;
       }
-      else if(userProgress.cardProgress[cardId]==2){
-        //add something later
+      else if (userProgress.cardProgress[cardId] == 2) {
+        num_practiced++;
       }
       else if (userProgress.cardProgress[cardId] == 1) {
-        num_practiced++;
+        //add something later
       }
     }
 
-    userProgress.percentMastered = (num_mastered / num_cards)*100;
-    userProgress.percentPracticed = (num_practiced / num_cards)*100;
+    userProgress.percentMastered = (num_mastered / num_cards) * 100;
+    userProgress.percentPracticed = (num_practiced / num_cards) * 100;
     return userProgress;
   }
 }

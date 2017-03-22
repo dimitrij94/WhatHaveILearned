@@ -1,9 +1,7 @@
 import {Component, OnInit} from "@angular/core";
-import {Router} from "@angular/router";
 import {Breadcrumb} from "./breadcrumb/breadcrumb";
 import {AuthenticationService} from "./authentication/authentication.service";
 import {User} from "./user/user";
-
 import {Location} from "@angular/common";
 @Component({
   selector: 'my-app',

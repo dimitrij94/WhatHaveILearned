@@ -18,13 +18,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  */
 var core_1 = require("@angular/core");
 var mock_user_interest_1 = require("./mock-user-interest");
-var breadcrumb_service_1 = require("../breadcrumb/breadcrumb.service");
-var cachable_generic_service_1 = require("../cachable-generic.service");
+var cachable_generic_service_1 = require("../generic/cachable-generic.service");
+var folder_service_1 = require("../folders/folder.service");
 var UserInterestService = (function (_super) {
     __extends(UserInterestService, _super);
-    function UserInterestService(breadcrumbService) {
+    function UserInterestService(folderService) {
         _super.call(this);
-        this.breadcrumbService = breadcrumbService;
+        this.folderService = folderService;
         this.cache = {};
     }
     UserInterestService.prototype.getCache = function () {
@@ -38,36 +38,33 @@ var UserInterestService = (function (_super) {
     UserInterestService.prototype.getAllById = function (ids) {
         return new Promise(function (resolve) { return setTimeout(function () { return resolve([mock_user_interest_1.MOCK_USER_INTEREST]); }, 1000); });
     };
-    UserInterestService.prototype.getAndCacheUserInterestById = function (user_id, id, callback) {
-        var _this = this;
-        new Promise(function (resolve) {
+    UserInterestService.prototype.getUserInterestById = function (user_id, id) {
+        return new Promise(function (resolve) {
             setTimeout(function () {
                 resolve(mock_user_interest_1.MOCK_USER_INTEREST);
             }, 1000);
-        }).then(function (user_interest) {
-            _super.prototype.cacheValue.call(_this, mock_user_interest_1.MOCK_USER_INTEREST);
-            callback(user_interest);
         });
     };
-    UserInterestService.prototype.getUserInterest = function (user_id, id, callback, force_reset) {
+    UserInterestService.prototype.cacheValue = function (interest) {
+        this.folderService.cacheAll(interest.folders);
+        _super.prototype.cacheValue.call(this, interest);
+    };
+    UserInterestService.prototype.getUserInterest = function (user_id, id, force_reset) {
         if (force_reset === void 0) { force_reset = false; }
         if (force_reset) {
-            this.getAndCacheUserInterestById(user_id, id, callback);
+            this.getUserInterestById(user_id, id);
         }
         else {
             var userInterest = _super.prototype.getFromCache.call(this, id);
             if (userInterest)
-                callback(userInterest);
+                return Promise.resolve(userInterest);
             else
-                this.getAndCacheUserInterestById(user_id, id, callback);
+                return this.getUserInterestById(user_id, id);
         }
-    };
-    UserInterestService.prototype.getBreadcrumbs = function (route, interest) {
-        return this.breadcrumbService.getInterestBreadcrumbs(route, interest);
     };
     UserInterestService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [breadcrumb_service_1.BreadcrumbService])
+        __metadata('design:paramtypes', [folder_service_1.FolderService])
     ], UserInterestService);
     return UserInterestService;
 }(cachable_generic_service_1.CachableGenericService));

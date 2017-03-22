@@ -3,6 +3,8 @@
  * to Microsoft browsers. Chrome can be included by checking for the `html[hc]`
  * attribute, however Chrome handles high contrast differently.
  */
+@import "https://fonts.googleapis.com/icon?family=Roboto";
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
 .md-elevation-z0 {
   box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12); }
 
@@ -1032,35 +1034,67 @@ md-toolbar a {
 md-grid-list {
   margin: 8px; }
 
+#folder-component-wrapper {
+  height: 100%; }
+  #folder-component-wrapper .folder-menu {
+    width: 4em;
+    height: 100%;
+    position: fixed;
+    padding-top: 3em;
+    box-shadow: 0 8px 10px -5px rgba(0, 0, 0, 0.2), 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12); }
+    #folder-component-wrapper .folder-menu .folder-menu-item {
+      text-decoration: none;
+      cursor: pointer;
+      text-align: center;
+      margin: 6px 0; }
+      #folder-component-wrapper .folder-menu .folder-menu-item md-icon {
+        width: 100%;
+        text-align: center; }
+      #folder-component-wrapper .folder-menu .folder-menu-item small {
+        font-size: 0.67em; }
+  #folder-component-wrapper .folder-content {
+    overflow: auto;
+    width: 100%;
+    margin-left: 3.5em; }
+
 md-card {
   margin: 0 0.5em; }
   md-card md-card-header md-icon {
     line-height: 40px !important; }
 
-.child-directories {
-  padding-left: 15px; }
-
-my-directory a {
-  text-decoration: none; }
-  my-directory a:hover {
-    background-color: #ffd740;
-    color: white; }
-  my-directory a md-icon:nth-child(2) {
-    margin: 0 5px 0 9px; }
+my-navigation md-toolbar {
+  z-index: 5;
+  position: relative; }
+my-navigation md-list {
+  padding-top: 0 !important; }
+  my-navigation md-list my-directory > a {
+    z-index: 2;
+    position: relative;
+    background-color: white; }
+    my-navigation md-list my-directory > a:hover {
+      background-color: #ffd740; }
+    my-navigation md-list my-directory > a div md-icon:nth-child(2) {
+      cursor: pointer; }
+    my-navigation md-list my-directory > a div md-icon:nth-child(3) {
+      margin: 0 5px 0 9px; }
+    my-navigation md-list my-directory > a a {
+      text-decoration: none;
+      color: black; }
 
 md-list {
   align-items: center; }
   md-list .folder-item {
     position: relative;
-    cursor: pointer;
     z-index: 2;
     width: 35em;
-    margin-left: -300px;
     background-color: rgba(245, 245, 245, 0.4); }
+    md-list .folder-item a {
+      text-decoration: none; }
     md-list .folder-item .folder-item-filler, md-list .folder-item .folder-item-filler-practiced, md-list .folder-item .folder-item-filler-mastered {
       left: 0 !important;
       position: absolute;
-      height: 100%;
+      top: 95%;
+      height: 5%;
       z-index: 1; }
     md-list .folder-item .folder-item-filler-practiced {
       background-color: rgba(64, 196, 255, 0.2); }
@@ -1079,8 +1113,7 @@ md-sidenav {
   width: 300px; }
 
 html, body, my-app, md-sidenav-container, .md-sidenav-content {
-  margin: 0;
-  width: 100%;
-  height: 100%; }
+  height: 100%;
+  margin: 0; }
 
 /*# sourceMappingURL=main.css.map */

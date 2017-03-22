@@ -13,15 +13,17 @@ var material_1 = require("@angular/material");
 var common_1 = require("@angular/common");
 var card_component_1 = require("./card.component");
 var flex_layout_1 = require("@angular/flex-layout");
+var card_edit_component_1 = require("./card-edit.component");
+var forms_1 = require("@angular/forms");
 var CardModule = (function () {
     function CardModule() {
     }
     CardModule = __decorate([
         core_1.NgModule({
-            imports: [flex_layout_1.FlexLayoutModule.forRoot(), common_1.CommonModule, material_1.MaterialModule],
-            declarations: [card_component_1.CardComponent],
+            imports: [flex_layout_1.FlexLayoutModule, common_1.CommonModule, material_1.MaterialModule.forRoot(), forms_1.FormsModule],
+            declarations: [card_component_1.CardComponent, card_edit_component_1.CardEditComponent],
             providers: [],
-            exports: [card_component_1.CardComponent]
+            exports: [card_component_1.CardComponent, card_edit_component_1.CardEditComponent]
         }), 
         __metadata('design:paramtypes', [])
     ], CardModule);

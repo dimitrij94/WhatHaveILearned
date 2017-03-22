@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var cacheable_entity_1 = require("../cacheable-entity");
+var cacheable_entity_1 = require("../generic/cacheable-entity");
 /**
  * Created by Dmitrij on 12.01.2017.
  */

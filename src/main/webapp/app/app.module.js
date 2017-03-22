@@ -42,7 +42,7 @@ var AppModule = (function () {
                 user_module_1.UserModule
             ],
             exports: [],
-            providers: [{ provide: core_1.LOCALE_ID, useValue: 'uk_UA' }, user_progress_service_1.UserProgressService, my_routing_service_1.MyRoutingService],
+            providers: [{ provide: core_1.LOCALE_ID, useValue: 'uk-UA' }, user_progress_service_1.UserProgressService, my_routing_service_1.MyRoutingService],
             declarations: [app_component_1.AppComponent, my_page_not_found_component_1.MyPageNotFoundComponent],
             bootstrap: [app_component_1.AppComponent]
         }), 

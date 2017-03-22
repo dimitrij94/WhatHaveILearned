@@ -22,7 +22,7 @@ var BreadcrumbModule = (function () {
     }
     BreadcrumbModule = __decorate([
         core_1.NgModule({
-            imports: [material_1.MaterialModule, common_1.CommonModule, router_1.RouterModule],
+            imports: [material_1.MaterialModule.forRoot(), common_1.CommonModule, router_1.RouterModule],
             exports: [breadcrumb_component_1.BreadcrumbComponent],
             declarations: [breadcrumb_component_1.BreadcrumbComponent],
             providers: [breadcrumb_service_1.BreadcrumbService]

@@ -22,7 +22,7 @@ var MyNavigationModule = (function () {
     }
     MyNavigationModule = __decorate([
         core_1.NgModule({
-            imports: [common_1.CommonModule, material_1.MaterialModule, router_1.RouterModule],
+            imports: [common_1.CommonModule, material_1.MaterialModule.forRoot(), router_1.RouterModule],
             exports: [directory_component_1.DirectoryComponent, navigation_component_1.NavigationComponent],
             declarations: [directory_component_1.DirectoryComponent, navigation_component_1.NavigationComponent],
             providers: []

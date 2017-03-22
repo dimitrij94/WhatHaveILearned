@@ -1,6 +1,5 @@
 import {Injectable} from "@angular/core";
 import {UserInterest} from "../interest/user-interest";
-import {ActivatedRoute} from "@angular/router";
 import {MyRoutingService} from "../my-routing.service";
 import {Folder} from "../folders/folder";
 import {Breadcrumb} from "./breadcrumb";
@@ -13,7 +12,7 @@ export class BreadcrumbService {
 
   }
 
-  public getInterestBreadcrumbs(route:ActivatedRoute, interest:UserInterest):Array<Breadcrumb> {
+  public getInterestBreadcrumbs(interest:UserInterest, user_id:number):Array<Breadcrumb> {
     return [
       {
         name: 'HOME',
@@ -21,16 +20,16 @@ export class BreadcrumbService {
       },
       {
         name: interest.name,
-        href: this.routingService.getInterestRoutingLink(route, interest)
+        href: this.routingService.getInterestRoutingLink(interest.id, user_id)
       },
     ]
   }
 
-  getFolderBreadcrumbs(route:ActivatedRoute, folder:Folder, interest:UserInterest) {
-    return this.getInterestBreadcrumbs(route, interest).concat(
+  getFolderBreadcrumbs(folder:Folder, interest:UserInterest, folder_id:number, user_id:number) {
+    return this.getInterestBreadcrumbs(interest, user_id).concat(
       [{
         name: folder.title.toUpperCase(),
-        href: this.routingService.getFolderRouterLink(route, folder)
+        href: this.routingService.getFolderRouterLink(user_id, interest.id, folder_id)
       }]
     );
   }

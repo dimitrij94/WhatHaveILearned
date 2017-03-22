@@ -22,15 +22,18 @@ var learning_session_service_1 = require("../learning-session/learning-session.s
 var folder_service_1 = require("../folders/folder.service");
 var user_progress_service_1 = require("../user-progress/user-progress-service");
 var UserInterestComponent = (function () {
-    function UserInterestComponent(interestService, learningSessionService, route, folderService, authService, location, routingService, userProgressService) {
+    function UserInterestComponent(interestService, learningSessionService, 
+        /* folder service is used inside the template*/
+        folderService, route, authService, location, routingService, userProgressService, parentRouter) {
         this.interestService = interestService;
         this.learningSessionService = learningSessionService;
-        this.route = route;
         this.folderService = folderService;
+        this.route = route;
         this.authService = authService;
         this.location = location;
         this.routingService = routingService;
         this.userProgressService = userProgressService;
+        this.parentRouter = parentRouter;
     }
     UserInterestComponent.prototype.getFolderLastLearningSessionDate = function (sessions) {
         if (sessions)
@@ -41,19 +44,27 @@ var UserInterestComponent = (function () {
                 console.log(ex);
             }
         else
-            return "Not studied yet";
+            return "Folder have not bean studied yet";
+    };
+    UserInterestComponent.prototype.getRouterLink = function (folder) {
+        this.parentRouter.navigateByUrl(this.routingService.getFolderRouterLink(+this.params['user_id'], +this.params['interest_id'], folder.id).join(''));
     };
     UserInterestComponent.prototype.ngOnInit = function () {
         var _this = this;
-        var self = this;
         this.route.params
-            .subscribe(function (params) {
+            .switchMap(function (params) {
+            _this.params = params;
             _this.authService.checkPermissions(+params['interest_id'], _this.location);
-            _this.interestService.getUserInterest(+params['user_id'], +params['interest_id'], function (userInterest) {
-                userInterest.folders = userInterest.folders.map(function (folder) { return _this.userProgressService.getUserProgress(folder, _this.user); });
-                self.interest = userInterest;
-                //this.breadcrumbs = this.interestService.getBreadcrumbs(this.route, userInterest);
+            return _this.interestService.getUserInterest(+params['user_id'], +params['interest_id']);
+        })
+            .subscribe(function (userInterest) {
+            userInterest.folders.forEach(function (folder) {
+                folder.lastLearningSessionDate = _this.getFolderLastLearningSessionDate(folder.learningSessions);
+                folder.userProgress = _this.userProgressService.estimateProgress(folder, _this.user);
             });
+            _this.interestService.cacheValue(userInterest);
+            _this.interest = userInterest;
+            //this.breadcrumbs = this.interestService.getBreadcrumbs(this.route, userInterest);
         });
     };
     UserInterestComponent = __decorate([
@@ -62,7 +73,7 @@ var UserInterestComponent = (function () {
             moduleId: module.id,
             templateUrl: 'user-interest.component.html'
         }), 
-        __metadata('design:paramtypes', [user_interest_service_1.UserInterestService, learning_session_service_1.LearningSessionService, router_1.ActivatedRoute, folder_service_1.FolderService, authentication_service_1.AuthenticationService, common_1.Location, my_routing_service_1.MyRoutingService, user_progress_service_1.UserProgressService])
+        __metadata('design:paramtypes', [user_interest_service_1.UserInterestService, learning_session_service_1.LearningSessionService, folder_service_1.FolderService, router_1.ActivatedRoute, authentication_service_1.AuthenticationService, common_1.Location, my_routing_service_1.MyRoutingService, user_progress_service_1.UserProgressService, router_1.Router])
     ], UserInterestComponent);
     return UserInterestComponent;
 }());

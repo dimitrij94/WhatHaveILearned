@@ -29,7 +29,7 @@ import {LearningSessionModule} from "./learning-session/learing-session.module";
     UserModule
   ],
   exports:[],
-  providers: [{provide:LOCALE_ID, useValue:'uk_UA'}, UserProgressService, MyRoutingService],
+  providers: [{provide:LOCALE_ID, useValue:'uk-UA'}, UserProgressService, MyRoutingService],
   declarations: [AppComponent, MyPageNotFoundComponent],
   bootstrap: [AppComponent]
 })

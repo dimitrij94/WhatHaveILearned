@@ -13,7 +13,7 @@
 @mixin background-color($color, $hue){
   $themeColor: map_get($theme, $color);
   &{
-    background-color: md-color($themeColor, $hue);
+    background-color: mat-color($themeColor, $hue);
   }
 }
 

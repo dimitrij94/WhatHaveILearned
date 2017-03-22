@@ -23,7 +23,7 @@ var UserModule = (function () {
     }
     UserModule = __decorate([
         core_1.NgModule({
-            imports: [common_1.CommonModule, breadcrumb_module_1.BreadcrumbModule, router_1.RouterModule, material_1.MaterialModule],
+            imports: [common_1.CommonModule, breadcrumb_module_1.BreadcrumbModule, router_1.RouterModule, material_1.MaterialModule.forRoot()],
             exports: [user_home_component_1.UserHomeComponent],
             providers: [user_service_1.UserService],
             declarations: [user_home_component_1.UserHomeComponent]

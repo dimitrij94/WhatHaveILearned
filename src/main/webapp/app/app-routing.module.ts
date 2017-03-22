@@ -1,9 +1,10 @@
 import {NgModule} from "@angular/core";
-import {FolderComponent} from "./folders/folder.component";
+import {FolderComponent} from "./folders/folder-overview/folder.component";
 import {Routes, RouterModule} from "@angular/router";
 import {MyPageNotFoundComponent} from "./my-page-not-found.component";
 import {UserInterestComponent} from "./interest/user-interest.component";
 import {UserHomeComponent} from "./user/user-home.component";
+import {FolderEditComponent} from "./folders/folder-edit-page/folder-edit.component";
 
 const appRoutes:Routes = [
   {
@@ -14,6 +15,10 @@ const appRoutes:Routes = [
   {
     path: 'user/:user_id/interest/:interest_id/folder/:folder_id',
     component: FolderComponent
+  },
+  {
+    path:'user/:user_id/interest/:interest_id/folder/:folder_id/edit',
+    component:FolderEditComponent
   },
   {
     path: 'user/:user_id/interest/:interest_id',
