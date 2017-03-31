@@ -3,7 +3,7 @@
  */
 
 import {Component, Input} from "@angular/core";
-import {Card} from "./card";
+import {Card} from "../card";
 
 @Component({
   templateUrl: "card.component.html",

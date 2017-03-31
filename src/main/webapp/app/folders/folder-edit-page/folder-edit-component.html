@@ -1,0 +1,11 @@
+<div *ngIf="folder" class="flex-container" fxLayout="row" fxLayoutAlign="center center" fxFill>
+  <md-icon *ngIf='selectedCardsQueue.length > 2' (click)="previousCard()">keyboard_arrow_left</md-icon>
+  <card-edit *ngFor="let card of selectedCardsQueue; let i=index"
+             style="width:33%"
+             [@shuffleCardsAnimation]="getAnimationState(i)"
+             [editedCard]="card"
+             fxFlex="40">
+
+  </card-edit>
+  <md-icon (click)="nextCard()">keyboard_arrow_right</md-icon>
+</div>

@@ -3,9 +3,13 @@
  * Created by Dmitrij on 12.01.2017.
  */
 var Card = (function () {
-    function Card(id, title) {
-        this.id = id;
-        this.title = title;
+    function Card() {
+        this.id = null;
+        this.title = "";
+        this.task = "";
+        this.answer = "";
+        this.question = "";
+        this.hint = "";
     }
     ;
     return Card;

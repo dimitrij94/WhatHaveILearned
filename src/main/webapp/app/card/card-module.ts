@@ -1,9 +1,9 @@
 import {NgModule} from "@angular/core";
 import {MaterialModule} from "@angular/material";
 import {CommonModule} from "@angular/common";
-import {CardComponent} from "./card.component";
+import {CardComponent} from "./cards-overview/card.component";
 import {FlexLayoutModule} from "@angular/flex-layout";
-import {CardEditComponent} from "./card-edit.component";
+import {CardEditComponent} from "./cards-edit/card-edit.component";
 import {FormsModule} from "@angular/forms";
 
 @NgModule({

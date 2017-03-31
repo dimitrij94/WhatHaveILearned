@@ -1,0 +1,53 @@
+<!--<div *ngIf="breadcrumbs">
+  <my-breadcrumbs [breadcrumbs]="breadcrumbs"></my-breadcrumbs>
+</div>
+-->
+<div id="folder-component-wrapper" class="flex-container" fxLayout="row" fxLayoutAlign="start stretch" fxFlexFill
+     *ngIf="folder">
+
+  <div class="folder-menu flex-container" fxLayout="column" fxLayoutAlign="start center">
+
+    <a class="folder-menu-item"
+       mdTooltip="Edit cards inside the folder"
+       [mdTooltipPosition]="'after'"
+       [routerLink]="routingService.getFolderEditRouterLink(params.user_id, params.interest_id, folder.id)"
+       routerLinkActive="active">
+      <md-icon>edit</md-icon>
+      <small>EDIT</small>
+    </a>
+
+    <a class="folder-menu-item"
+       mdTooltip="Import cards from external file"
+       [mdTooltipPosition]="'after'"
+       (click)="import()">
+      <md-icon>backup</md-icon>
+      <small>IMPORT</small>
+    </a>
+
+    <a class="folder-menu-item"
+       mdTooltip="Save folder cards as a text file"
+       [mdTooltipPosition]="'after'"
+       (click)="import()">
+      <md-icon>assignment_returned</md-icon>
+      <small>EXPORT</small>
+    </a>
+
+    <!--[routerLink]="routingService.getFolderShuffleRouterLink(params.user_id, params.interest_id, folder.id)"-->
+    <a class="folder-menu-item"
+       mdTooltip="Import cards from other folders of share cards from this"
+       [mdTooltipPosition]="'after'"
+       routerLinkActive="active">
+      <md-icon>view_carousel</md-icon>
+      <small>SHUFFLE</small>
+    </a>
+  </div>
+
+  <div class="folder-content">
+    <md-grid-list cols="2" rowHeight="6:4">
+      <md-grid-tile *ngFor="let card of folder.cards">
+        <myCard [card]="card"></myCard>
+      </md-grid-tile>
+    </md-grid-list>
+  </div>
+
+</div>

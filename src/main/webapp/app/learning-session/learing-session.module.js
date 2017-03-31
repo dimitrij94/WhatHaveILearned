@@ -8,26 +8,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+/**
+ * Created by Dmitrij on 18.02.2017.
+ */
 var core_1 = require("@angular/core");
-var material_1 = require("@angular/material");
-var common_1 = require("@angular/common");
-var card_component_1 = require("./cards-overview/card.component");
-var flex_layout_1 = require("@angular/flex-layout");
-var card_edit_component_1 = require("./cards-edit/card-edit.component");
-var forms_1 = require("@angular/forms");
-var CardModule = (function () {
-    function CardModule() {
+var learning_session_service_1 = require("./learning-session.service");
+var LearningSessionModule = (function () {
+    function LearningSessionModule() {
     }
-    CardModule = __decorate([
+    LearningSessionModule = __decorate([
         core_1.NgModule({
-            imports: [flex_layout_1.FlexLayoutModule, common_1.CommonModule, material_1.MaterialModule.forRoot(), forms_1.FormsModule],
-            declarations: [card_component_1.CardComponent, card_edit_component_1.CardEditComponent],
-            providers: [],
-            exports: [card_component_1.CardComponent, card_edit_component_1.CardEditComponent]
+            imports: [],
+            exports: [],
+            providers: [learning_session_service_1.LearningSessionService]
         }), 
         __metadata('design:paramtypes', [])
-    ], CardModule);
-    return CardModule;
+    ], LearningSessionModule);
+    return LearningSessionModule;
 }());
-exports.CardModule = CardModule;
-//# sourceMappingURL=card-module.js.map
+exports.LearningSessionModule = LearningSessionModule;
+//# sourceMappingURL=learing-session.module.js.map
